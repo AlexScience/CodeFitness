@@ -8,12 +8,11 @@ namespace Fitness.BL.Controller
     public class UserController
     {
         public User User { get; }
+
         public UserController(string userName, string genderName, DateTime birthDay, double weight, double height)
         {
             var gender = new Gender(genderName);
             User = new User(userName, gender, birthDay, weight, height);
-
-
         }
 
         public UserController()
@@ -25,7 +24,6 @@ namespace Fitness.BL.Controller
                 {
                     User = user;
                 }
-
             }
         }
 
@@ -35,7 +33,6 @@ namespace Fitness.BL.Controller
             using (var fs = new FileStream("user.dat", FileMode.OpenOrCreate))
             {
                 formatter.Serialize(fs, User);
-
             }
         }
 

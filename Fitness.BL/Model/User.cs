@@ -26,19 +26,19 @@ namespace Fitness.BL.Model
             }
             if (gender == null)
             {
-                throw new ArgumentNullException("Пол не может быть null",nameof(gender));
+                throw new ArgumentNullException("Пол не может быть null", nameof(gender));
             }
-            if (birthDate < DateTime.Parse("01.01.1923") || birthDate>=DateTime.Now)
+            if (birthDate < DateTime.Parse("01.01.1923") || birthDate >= DateTime.Now)
             {
-                throw new ArgumentException("Невозможная дата рождения",nameof(birthDate));
+                throw new ArgumentException("Невозможная дата рождения", nameof(birthDate));
             }
             if (weight <= 0)
             {
-                throw new ArgumentException("Вес не может быть меньше 0 или равен 0 ",nameof(weight));
+                throw new ArgumentException("Вес не может быть меньше 0 или равен 0 ", nameof(weight));
             }
             if (height <= 0)
             {
-                throw new ArgumentException("Рост не может быть меньше 0 или равен 0 ",nameof(height));
+                throw new ArgumentException("Рост не может быть меньше 0 или равен 0 ", nameof(height));
             }
             #endregion
 
@@ -48,6 +48,7 @@ namespace Fitness.BL.Model
             Weight = weight;
             Height = height;
         }
+
         public override string ToString()
         {
             return Name;//Зачем это переопределение ToString() ?

@@ -12,9 +12,9 @@ namespace Fitness.BL.Model
             if (string.IsNullOrWhiteSpace(name))
             {
                 throw new ArgumentNullException("Имя пола не может быть пустым", nameof(name));
-
             }
-            Name = name;    
+
+            Name = name;
         }
         public override string ToString()
         {
