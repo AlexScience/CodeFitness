@@ -1,30 +1,62 @@
 ﻿using Fitness.BL.Model;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Fitness.BL.Controller
 {
     public class UserController
     {
-        public User User { get; }
+        public List<User> Users { get; }
+        public User CurrentUser { get; }
 
-        public UserController(string userName, string genderName, DateTime birthDay, double weight, double height)
+        public bool IsNewUser { get; } = false;
+
+        public UserController(string userName)
         {
-            var gender = new Gender(genderName);
-            User = new User(userName, gender, birthDay, weight, height);
+            if (string.IsNullOrWhiteSpace(userName))
+            {
+                throw new ArgumentNullException("Поле имени пользователя не может быть пустым ", nameof(userName));
+            }
+
+            Users = GetUsersData();
+
+            CurrentUser = Users.SingleOrDefault(u => u.Name == userName);
+            if (CurrentUser == null)
+            {
+                CurrentUser = new User(userName);
+                Users.Add(CurrentUser);
+                IsNewUser = true;
+                Save();
+            }
         }
 
-        public UserController()
+        private List<User> GetUsersData()
         {
             var formatter = new BinaryFormatter();
             using (var fs = new FileStream("user.dat", FileMode.OpenOrCreate))
             {
-                if (formatter.Deserialize(fs) is User user)
+                if (formatter.Deserialize(fs) is List<User> users)
                 {
-                    User = user;
+                    return users;
+                }
+                else
+                {
+                    return new List<User>();
                 }
             }
+        }
+
+        public void SetNewUserData(string genderName, DateTime birthDate, double weight = 1, double height = 1)
+        {
+            //проверка 
+            CurrentUser.Gender = new Gender(genderName);
+            CurrentUser.BirthDate = birthDate;
+            CurrentUser.Weight = weight;
+            CurrentUser.Height = height;
+            Save();
         }
 
         public void Save()
@@ -32,9 +64,8 @@ namespace Fitness.BL.Controller
             var formatter = new BinaryFormatter();
             using (var fs = new FileStream("user.dat", FileMode.OpenOrCreate))
             {
-                formatter.Serialize(fs, User);
+                formatter.Serialize(fs, Users);
             }
         }
-
     }
 }
