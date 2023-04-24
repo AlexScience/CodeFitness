@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿using Fitness.BL.Model;
 using System;
 using System.Collections.Generic;
@@ -5,10 +6,14 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 
+=======
+﻿
+>>>>>>> origin/master
 namespace Fitness.BL.Controller
 {
     public class UserController
     {
+<<<<<<< HEAD
         public List<User> Users { get; }
         public User CurrentUser { get; }
 
@@ -69,3 +74,7 @@ namespace Fitness.BL.Controller
         }
     }
 }
+=======
+    }
+}
+>>>>>>> origin/master
